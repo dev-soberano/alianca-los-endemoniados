@@ -1600,3 +1600,168 @@ select.admin-input option {
   color: var(--primary);
 }
 .btn-recusar:hover { background: var(--primary); color: #fff; }
+
+/* =========================================================
+   MODAL VERBAN (ROKKO STYLE)
+========================================================= */
+.modal-verban-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal-verban-box {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  height: 650px;
+  max-height: 90vh;
+  background: #000 url('perverso_fondo.jpg') no-repeat center center;
+  background-size: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 0, 60, 0.4);
+  box-shadow: 0 0 25px rgba(255, 0, 60, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.verban-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rokko-header {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.rokko-sub {
+  font-family: 'Rajdhani', sans-serif;
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.rokko-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.rokko-select-country {
+  width: 70%;
+  border-bottom: 1px solid #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 4px;
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.arrow-down {
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+.rokko-input-group {
+  width: 70%;
+  border-bottom: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 6px 4px;
+  margin-bottom: 30px;
+}
+
+.ddi-prefix {
+  color: #fff;
+  font-size: 1rem;
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+.rokko-input-group input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 1.1rem;
+  width: 100%;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+.rokko-title h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 4px;
+  color: #d1d1d1;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  margin: 10px 0 30px 0;
+  text-align: center;
+}
+
+.rokko-btn-verificar {
+  width: 60%;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: opacity 0.2s;
+}
+
+.rokko-btn-verificar:hover {
+  opacity: 0.9;
+}
+
+.verban-resultado {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-align: center;
+  min-height: 24px;
+}
+
+.res-ativo {
+  color: #00e676;
+  text-shadow: 0 0 5px rgba(0, 230, 118, 0.5);
+}
+
+.res-banido {
+  color: #ff003c;
+  text-shadow: 0 0 5px rgba(255, 0, 60, 0.5);
+}

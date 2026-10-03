@@ -156,8 +156,10 @@ function inicializarPlayerMusica() {
 
   if (btnDesktop) btnDesktop.onclick = toggleAudio;
   if (btnMobile) btnMobile.onclick = toggleAudio;
-  audio.onplay = atualizarUI;
-  audio.onpause = atualizarUI;
+  if (audio) {
+    audio.onplay = atualizarUI;
+    audio.onpause = atualizarUI;
+  }
 
   if (btnEntrar) {
     btnEntrar.onclick = () => {
@@ -380,10 +382,6 @@ async function aprovarPendente(id) {
     const item = await res.json();
     if (!item) { alert("Este grupo pendente já não existe mais."); carregarPendentesAdm(); return; }
 
-    // Reenvia a imagem pro imgbb pra ficar salva de forma permanente.
-    // Aqui é seguro fazer isso (diferente da busca automática do visitante),
-    // pois é sempre 1 grupo por vez, então não há risco de estourar o
-    // tempo limite de nenhuma função — isso roda direto no navegador.
     let imagemFinal = item.imagem;
     if (imagemFinal) {
       try {
@@ -523,6 +521,52 @@ function atualizarTodosCarrosseis() {
   atualizadoresCarrossel.forEach((fn) => fn());
 }
 
+// ============================================================================
+// 7. LÓGICA DO VERBAN (ROKKO) - CHECADOR DE BAN DO WHATSAPP
+// ============================================================================
+function inicializarVerbanRokko() {
+  const btnVerificar = document.getElementById('btnVerificarBan');
+  if (!btnVerificar) return;
+
+  btnVerificar.addEventListener('click', async () => {
+    const inputNumero = document.getElementById('verbanNumero');
+    const divResultado = document.getElementById('verbanResultado');
+    if (!inputNumero || !divResultado) return;
+
+    const numero = inputNumero.value.trim().replace(/\D/g, '');
+
+    if (numero.length < 10) {
+      divResultado.className = 'verban-resultado res-banido';
+      divResultado.innerText = 'Digite um número válido com DDD!';
+      return;
+    }
+
+    divResultado.className = 'verban-resultado';
+    divResultado.style.color = '#ccc';
+    divResultado.innerText = 'Consultando no WhatsApp...';
+
+    try {
+      // Altere o endpoint abaixo conforme sua API/Instância Baileys ou Evolution API
+      const response = await fetch(`/api/check-number?phone=55${numero}`);
+      const data = await response.json();
+
+      if (data.exists) {
+        divResultado.className = 'verban-resultado res-ativo';
+        divResultado.innerText = '✅ NÚMERO ATIVO / NORMAL';
+      } else {
+        divResultado.className = 'verban-resultado res-banido';
+        divResultado.innerText = '❌ NÚMERO BANIDO OU NÃO REGISTRADO';
+      }
+    } catch (error) {
+      divResultado.className = 'verban-resultado res-banido';
+      divResultado.innerText = 'Erro ao conectar ao servidor de checagem.';
+    }
+  });
+}
+
+// ============================================================================
+// INICIALIZAÇÃO GERAL
+// ============================================================================
 document.addEventListener("DOMContentLoaded", () => {
   inicializarSetasCarrossel();
   carregarLinksDoFirebase();
@@ -530,5 +574,6 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarPlayerMusica();
   inicializarPainelControleAdm();
   inicializarSistemaCompartilhar();
-  carregarPendentesAdm(); // atualiza o badge de pendentes mesmo antes de logar
+  carregarPendentesAdm();
+  inicializarVerbanRokko();
 });
